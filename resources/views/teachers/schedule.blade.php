@@ -22,19 +22,21 @@
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek', // Shows a weekly view with hourly slots
-                events: '/teacher/teachers/schedules/events', // Fetch data from the controller
-                slotDuration: '01:00:00', // 1 hour per slot
+                initialView: 'timeGridWeek',
+                events: '/teacher/teachers/schedules/events', // Fetch data controller
+                slotDuration: '00:30:00',
+                slotLabelInterval: '00:30:00', 
                 slotMinTime: '07:00:00',
                 slotMaxTime: '21:00:00',
+                allDaySlot: false,
                 slotLabelFormat: { // Custom format for time slots
-                hour: '2-digit', // Show hour in 2 digits (e.g., '07')
-                minute: '2-digit', // Show minutes in 2 digits (e.g., '00')
-                hour12: true, // Use 12-hour format with AM/PM
-                meridiem: 'short' // Use 'AM' / 'PM'
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: true, 
+                meridiem: 'short'
             },
                 editable: false,
-                eventColor: '#3174ad'
+                eventColor: '#3174ad',
             });
             calendar.render();
          
