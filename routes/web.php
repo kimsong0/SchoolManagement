@@ -37,10 +37,12 @@ Route::middleware(['auth'])->group(function () {
        Route::get('/', function(){
            return view('teacher');
        })->name('teacher');
-        Route::get('/teacher/schedule', [ScheduleController::class, 'teacherSchedule'])->name('teacher.schedule');
+        Route::get('/teachers/schedule', [ScheduleController::class, 'teacherSchedule'])->name('teachers.schedule');
+        Route::get('/teachers/schedules/events', [ScheduleController::class, 'getTeacherEvents']);
 
-       Route::resource('teacher/students', StudentController::class)
-    ->names('teacher.students');
+
+       Route::resource('teachers/students', StudentController::class)
+    ->names('teachers.students');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -80,8 +82,8 @@ require __DIR__.'/auth.php';
 //             return redirect()->route('student');
 //         } elseif (Auth::user()->role === 'teacher') {
 //             return redirect()->route('teacher');
-//             Route::resource('teacher/students', StudentController::class)
-//             ->names('teacher.students');
+//             Route::resource('teachers/students', StudentController::class)
+//             ->names('teachers.students');
 //             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //             Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //             Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -98,8 +100,8 @@ require __DIR__.'/auth.php';
 //     Route::get('/teacher', function () {
 //         return view('teacher'); // Teacher page
 //     })->name('teacher');
-//     Route::resource('teacher/students', StudentController::class)
-//     ->names('teacher.students');
+//     Route::resource('teachers/students', StudentController::class)
+//     ->names('teachers.students');
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

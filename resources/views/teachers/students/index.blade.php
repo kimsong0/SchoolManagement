@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                 <a href="{{ route('teacher') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Back</a>
-                    <a href="{{ route('teacher.students.create') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Add New Student</a>
+                    <a href="{{ route('teachers.students.create') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Add New Student</a>
                     <table class="table-auto w-full mt-6">
                         <thead>
                             <tr>
@@ -29,8 +29,8 @@
                                     <td>{{ $student->school }}</td>
                                     <td>{{ $student->email }}</td>
                                     <td>
-                                        <a href="{{ route('teacher.students.edit', $student->id) }}" class="text-blue-500">Edit</a>
-                                        <form action="{{ route('teacher.students.destroy', $student->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                                        <a href="{{ route('teachers.students.edit', $student->id) }}" class="text-blue-500">Edit</a>
+                                        <form action="{{ route('teachers.students.destroy', $student->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500">Delete</button>

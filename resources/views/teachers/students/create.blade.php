@@ -18,7 +18,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('teacher.students.store') }}">
+                    <form method="POST" action="{{ route('teachers.students.store') }}">
                         @csrf
                         <div>
                             <label for="name">Name:</label>
@@ -36,7 +36,7 @@
                             <label for="email">Email:</label>
                             <input type="email" name="email" id="email" class="form-input" required>
                         </div>
-                        <a href="{{ route('teacher.students.index') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Go Back</a>
+                        <a href="{{ route('teachers.students.index') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Go Back</a>
                     
                         <button type="submit" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Save</button>
                     </form>

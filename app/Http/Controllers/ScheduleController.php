@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class ScheduleController extends Controller
 {
@@ -43,8 +45,21 @@ class ScheduleController extends Controller
     // Teacher views their schedule
     public function teacherSchedule()
     {
-    $schedules = \App\Models\Schedule::where('teacher_id', auth()->id())->get();
-    return view('teacher.schedule', compact('schedules'));
+    return view('teachers.schedule',);
     }
+    public function getTeacherEvents()
+{
+    $events = \App\Models\Schedule::where('teacher_id', auth()->user()->id)
+        ->get()
+        ->map(function ($schedule) {
+            return [
+                'classroom' => $schedule->classroom,
+                'start' => Carbon::parse($schedule->schedule_date . ' ' . $schedule->start_time)->toDateTimeString(),
+                'end' => Carbon::parse($schedule->schedule_date . ' ' . $schedule->end_time)->toDateTimeString(),
+            ];
+        });
+
+    return response()->json($events);
+}
 
 }

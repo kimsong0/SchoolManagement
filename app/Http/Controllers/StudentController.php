@@ -14,13 +14,13 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('teacher.students.index', compact('students'));
+        return view('teachers.students.index', compact('students'));
     }
 
     // Show the form to create a new student
     public function create()
     {
-        return view('teacher.students.create');
+        return view('teachers.students.create');
     }
 
     // Store a new student in the database
@@ -48,14 +48,14 @@ class StudentController extends Controller
         'role' => 'student',
     ]);
 
-        return redirect()->route('teacher.students.index')
+        return redirect()->route('teachers.students.index')
         ->with('success', 'Student created successfully.A password reset link has been sent to the email.');
     }
 
     // Show the form to edit a student
     public function edit(Student $student)
     {
-        return view('teacher.students.edit', compact('student'));
+        return view('teachers.students.edit', compact('student'));
     }
 
     // Update the student in the database
@@ -68,13 +68,13 @@ class StudentController extends Controller
         ]);
 
         $student->update($request->all());
-        return redirect()->route('teacher.students.index');
+        return redirect()->route('teachers.students.index');
     }
 
     // Delete a student from the database
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route('teacher.students.index');
+        return redirect()->route('teachers.students.index');
     }
 }
