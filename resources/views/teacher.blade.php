@@ -64,8 +64,9 @@
     </nav>
     <div class="container">
         <div class="card">
-            <p>You're logged in!</p>
+        <a href="{{ route('teacher.schedule') }}" style="color: blue; text-decoration: none;">My Schedule</a>
         </div>
+        
     </div>
 </body>
 </html>

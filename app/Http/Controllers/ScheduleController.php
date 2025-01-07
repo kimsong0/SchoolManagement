@@ -40,5 +40,11 @@ class ScheduleController extends Controller
     {
         return view('director.schedules.edit', compact('schedules'));
     }
+    // Teacher views their schedule
+    public function teacherSchedule()
+    {
+    $schedules = \App\Models\Schedule::where('teacher_id', auth()->id())->get();
+    return view('teacher.schedule', compact('schedules'));
+    }
 
 }

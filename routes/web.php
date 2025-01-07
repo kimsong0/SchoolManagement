@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
        Route::get('/', function(){
            return view('teacher');
        })->name('teacher');
+        Route::get('/teacher/schedule', [ScheduleController::class, 'teacherSchedule'])->name('teacher.schedule');
 
        Route::resource('teacher/students', StudentController::class)
     ->names('teacher.students');
