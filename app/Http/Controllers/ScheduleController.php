@@ -38,9 +38,23 @@ class ScheduleController extends Controller
         Schedule::create($request->all());
         return redirect()->route('director.schedules.index')->with('success', 'Schedule created successfully.');
     }
-    public function edit(Schedule $schedules)
+    public function edit(Schedule $schedule)
     {
-        return view('director.schedules.edit', compact('schedules'));
+        
+        return view('director.schedules.edit', compact('schedule'));
+    }
+
+    public function update(Request $request, Schedule $schedule)
+    {
+        $request->validate([
+            'schedule_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'classroom' => 'required|string|max:255',
+        ]);
+
+        $schedule->update($request->all());
+        return redirect()->route('director.schedules.index');
     }
     // Teacher views their schedule
     public function teacherSchedule()
@@ -61,5 +75,9 @@ class ScheduleController extends Controller
 
     return response()->json($events);
 }
-
+    public function destroy(schedule $schedule)
+    {
+        $schedule->delete();
+        return redirect()->route('director.schedules.index');
+    }
 }

@@ -27,8 +27,16 @@
                                 <tr>
                                 <td>{{ $schedule->schedule_date }}</td>
                                 <td>{{ $schedule->start_time }} - {{ $schedule->end_time }}</td>
-                                <td>{{ $schedule->schedule_date }}</td>
-                                <td>{{ $schedule->teacher->name }}</td>  
+                                <td>{{ $schedule->classroom }}</td>
+                                <td>{{ $schedule->teacher->name }}</td>
+                                <td>
+                                <a href="{{ route('director.schedules.edit', $schedule->id) }}" class="text-blue-500">Edit</a>
+                                        <form action="{{ route('director.schedules.destroy', $schedule->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500">Delete</button>
+                                        </form>
+                                    </td>  
                                 </tr>
                             @endforeach
                         </tbody>
@@ -37,6 +45,11 @@
             </div>
         </div>
     </div>
-   
+       <!-- Confirmation Script -->
+       <script type="text/javascript">
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this student?');
+        }
+        </script>
 </x-app-layout>
 
