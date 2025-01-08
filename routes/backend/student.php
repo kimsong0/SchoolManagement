@@ -10,7 +10,6 @@ Route::prefix('student')->middleware('student_access')->group(function(){
         return view('student'); // student page
         })->name('student');
 
-
     Route::get('/edit', function () {
         dd("edit");
     })->name('student');
