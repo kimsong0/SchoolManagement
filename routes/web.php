@@ -23,9 +23,6 @@ Route::middleware(['auth'])->group(function () {
            return view('student'); // student page
        })->name('student');
 
-       Route::get('/profile', [ProfileController::class, 'edit'])->name('student.profile.edit');
-       Route::patch('/profile', [ProfileController::class, 'update'])->name('student.profile.update');
-       Route::delete('/profile', [ProfileController::class, 'destroy'])->name('student.profile.destroy');
 
        Route::get('/edit', function () {
            dd("edit");
@@ -34,18 +31,19 @@ Route::middleware(['auth'])->group(function () {
 
    //Teacher
    Route::prefix('teacher')->middleware('teacher_access')->group(function(){
-       Route::get('/', function(){
+        Route::get('/', function(){
            return view('teacher');
-       })->name('teacher');
+        })->name('teacher');
         Route::get('/teachers/schedule', [ScheduleController::class, 'teacherSchedule'])->name('teachers.schedule');
         Route::get('/teachers/schedules/events', [ScheduleController::class, 'getTeacherEvents']);
 
 
-       Route::resource('teachers/students', StudentController::class)
-    ->names('teachers.students');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::resource('teachers/students', StudentController::class)
+            ->names('teachers.students');
+            
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
    });
 
@@ -56,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
        })->name('director');
 
        Route::resource('director/schedules', ScheduleController::class)
-       ->names('director.schedules');
+        ->names('director.schedules');
    });
    
 });

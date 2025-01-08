@@ -18,7 +18,7 @@
                             <tr>
                             <th style="text-align: left;">Date</th>
                             <th style="text-align: left;">Start Time - End Time</th>
-                            <th style="text-align: left;">classroom</th>
+                            <th style="text-align: left;">Classroom</th>
                             <th style="text-align: left;">Teacher</th>
                             </tr>
                         </thead>
@@ -48,7 +48,7 @@
        <!-- Confirmation Script -->
        <script type="text/javascript">
         function confirmDelete() {
-            return confirm('Are you sure you want to delete this student?');
+            return confirm('Are you sure you want to remove this class?');
         }
         </script>
 </x-app-layout>

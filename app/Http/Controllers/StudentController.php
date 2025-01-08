@@ -6,7 +6,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Http\Requests\StoreStudentRequest;
 
 class StudentController extends Controller
 {
@@ -24,15 +24,9 @@ class StudentController extends Controller
     }
 
     // Store a new student in the database
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'age' => 'required|integer',
-            'school' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email', 
-
-        ]);
+        dd($request->validated());
         if (User::where('email', $request->email)->exists()) {
             return back()->withErrors(['email' => 'This email is already taken.']);
         }
@@ -40,13 +34,13 @@ class StudentController extends Controller
         Student::create($request->all());
 
 
-    // Create the student user account with default password
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make('12345678'), // Temporary default password
-        'role' => 'student',
-    ]);
+        // Create the student user account with default password
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('12345678'), // Temporary default password
+            'role' => 'student',
+        ]);
 
         return redirect()->route('teachers.students.index')
         ->with('success', 'Student created successfully.A password reset link has been sent to the email.');
