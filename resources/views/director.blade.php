@@ -49,7 +49,7 @@
             <h2>Dashboard</h2>
         </div>
        <div class="actions">
-            <a href="{{ route('director.schedules.index') }}" style="color: blue; text-decoration: none;">Teacher Schedules</a>
+            <a href="{{ route('schedules.index') }}" style="color: blue; text-decoration: none;">Teacher Schedules</a>
             <form method="POST" action="{{ route('logout') }}">
                             @csrf
 

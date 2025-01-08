@@ -50,7 +50,7 @@
         </div>
        <div class="actions">
             <a href="{{ route('profile.edit') }}" style="color: blue; text-decoration: none;">Profile</a>
-            <a href="{{ route('teachers.students.index') }}" style="color: blue; text-decoration: none;">Manage Students</a>
+            <a href="{{ route('students.index') }}" style="color: blue; text-decoration: none;">Manage Students</a>
             <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -64,7 +64,7 @@
     </nav>
     <div class="container">
         <div class="card">
-        <a href="{{ route('teachers.schedule') }}" style="color: blue; text-decoration: none;">My Schedule </a>
+        <a href="{{ route('schedule') }}" style="color: blue; text-decoration: none;">My Schedule </a>
         </div>
         
     </div>

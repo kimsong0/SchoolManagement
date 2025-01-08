@@ -12,7 +12,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                 <a href="{{ route('director') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Back</a>
-                    <a href="{{ route('director.schedules.create') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Create Schedule</a>
+                    <a href="{{ route('schedules.create') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Create Schedule</a>
                     <table class="table-auto w-full mt-6">
                         <thead>
                             <tr>
@@ -30,8 +30,8 @@
                                 <td>{{ $schedule->classroom }}</td>
                                 <td>{{ $schedule->teacher->name }}</td>
                                 <td>
-                                <a href="{{ route('director.schedules.edit', $schedule->id) }}" class="text-blue-500">Edit</a>
-                                        <form action="{{ route('director.schedules.destroy', $schedule->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                                <a href="{{ route('schedules.edit', $schedule->id) }}" class="text-blue-500">Edit</a>
+                                        <form action="{{ route('schedules.destroy', $schedule->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500">Delete</button>

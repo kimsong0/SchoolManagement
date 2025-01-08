@@ -23,7 +23,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
-                events: '/teacher/teachers/schedules/events', // Fetch data controller
+                events: '/teacher/schedules/events', // Fetch data controller
                 slotDuration: '00:30:00',
                 slotLabelInterval: '00:30:00', 
                 slotMinTime: '07:00:00',

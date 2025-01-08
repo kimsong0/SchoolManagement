@@ -49,7 +49,6 @@
             <h2>Student</h2>
         </div>
        <div class="actions">
-            <a href="{{ route('student.profile.edit') }}" style="color: blue; text-decoration: none;">Profile</a>
             <form method="POST" action="{{ route('logout') }}">
                             @csrf
 

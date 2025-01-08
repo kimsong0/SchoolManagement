@@ -16,7 +16,7 @@
                             </ul>
                         </div>
                     @endif
-    <form method="POST" action="{{ route('director.schedules.store') }}">
+    <form method="POST" action="{{ route('schedules.store') }}">
         @csrf
         <div>
             <label for="teacher_id">Assign Teacher:</label>
@@ -42,7 +42,7 @@
             <label for="classroom">Classroom:</label>
             <input type="text" name="classroom" id="classroom" class="form-input" required>
         </div>        
-        <a href="{{ route('director.schedules.index') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Go Back</a>
+        <a href="{{ route('schedules.index') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Go Back</a>
 
         <button type="submit" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Create Schedule</button>
     </form>

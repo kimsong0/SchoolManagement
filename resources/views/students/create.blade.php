@@ -1,9 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        <a href="{{ route('director.schedules.index') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Back</a>
-
-            {{ __('Edit Schedule') }}
+            {{ __('Add New Student') }}
         </h2>
     </x-slot>
 
@@ -20,26 +18,27 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('director.schedules.update', $schedule->id) }}">
+                    <form method="POST" action="{{ route('students.store') }}">
                         @csrf
-                        @method('PUT')
                         <div>
-                            <label for="schedule_date">Date:</label>
-                            <input type="date" name="schedule_date" required>
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" id="name" class="form-input" required>
                         </div>
                         <div>
-                            <label for="start_time">Start Time:</label>
-                            <input type="time" name="start_time" required>
+                            <label for="age">Age:</label>
+                            <input type="number" name="age" id="age" class="form-input" required>
                         </div>
                         <div>
-                            <label for="end_time">End Time:</label>
-                            <input type="time" name="end_time" required>
+                            <label for="school">School:</label>
+                            <input type="text" name="school" id="school" class="form-input" required>
                         </div>
                         <div>
-                            <label for="classroom">Classroom:</label>
-                            <input type="text" name="classroom" id="classroom" class="form-input" required>
-                        </div>  
-                        <button type="submit" class="btn btn-primary">Update</button>
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" class="form-input" required>
+                        </div>
+                        <a href="{{ route('students.index') }}" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Go Back</a>
+                    
+                        <button type="submit" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Save</button>
                     </form>
                 </div>
             </div>
