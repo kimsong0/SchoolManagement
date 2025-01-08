@@ -22,7 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'teacher_id',
     ];
 
     /**
@@ -59,18 +58,10 @@ class User extends Authenticatable
     {
         return $this->role === 'student';
     }
+    
     public function isDirector()
     {
         return $this->role === 'director';
     }
    
-    public function setTeacherId($value)
-    {
-        // Only assign teacher_id if user is a teacher
-        if ($this->isTeacher()) {
-            $this->attributes['teacher_id'] = $value;
-        } else {
-            $this->attributes['teacher_id'] = null; // Set to null if not a teacher
-        }
-    }
 }

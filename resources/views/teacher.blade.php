@@ -53,7 +53,6 @@
             <a href="{{ route('students.index') }}" style="color: blue; text-decoration: none;">Manage Students</a>
             <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">

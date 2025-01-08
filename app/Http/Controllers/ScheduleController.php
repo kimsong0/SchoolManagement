@@ -56,6 +56,7 @@ class ScheduleController extends Controller
         $schedule->update($request->all());
         return redirect()->route('schedules.index');
     }
+    
     // Teacher views their schedule
     public function teacherSchedule()
     {
@@ -76,7 +77,7 @@ class ScheduleController extends Controller
 
         return response()->json($events);
     }
-    
+
     public function destroy(schedule $schedule)
     {
         $schedule->delete();
