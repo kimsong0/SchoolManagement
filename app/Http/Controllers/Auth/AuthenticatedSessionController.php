@@ -34,17 +34,8 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt($validated, $request->filled('remember'))) {
             // Check user's role
             $user = Auth::user();
+            return redirect('admin');
 
-            if ($user->isStudent()) {
-                // student
-                return redirect()->route('student');
-            } elseif ($user->isTeacher()) {
-                // teacher
-                return redirect()->route('teacher');
-            }elseif ($user->isDirector()) {
-                // director
-                return redirect()->route('director');
-            }
         }
 
         // If authentication fails, redirect back with an error message

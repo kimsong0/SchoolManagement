@@ -7,8 +7,8 @@ use App\Http\Controllers\StudentController;
 Route::prefix('student')->middleware('student_access')->group(function(){
 
     Route::get('/', function () {
-        return view('student'); // student page
-        })->name('student');
+        return redirect('admin');
+    })->name('student');
 
     Route::get('/edit', function () {
         dd("edit");
