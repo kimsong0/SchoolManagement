@@ -19,6 +19,7 @@ use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Resources\Pages\ListRecords;
 
 
 class ScheduleResource extends Resource
@@ -56,30 +57,41 @@ class ScheduleResource extends Resource
                 TextColumn::make('start_time')->time(),
                 TextColumn::make('end_time')->time(),
                 TextColumn::make('classroom')->sortable(),
-            ])
+                TextColumn::make('students_count')
+                    ->label('Students Joined')
+                    ->sortable()
+                    ->state(fn (Schedule $record) => $record->students()->count())            
+                ])
             ->filters([
-                SelectFilter::make('teacher')
-                ->options(User::where('role', 'teacher')->pluck('name', 'id'))
-                ->label('Teacher')
-                ->query(function ($query, $value) {
-                    if ($value) {
-                        $query->where('teacher_id', $value);
-                    }
-                })
-                ->query(function ($query) {
-                    // Only show schedules for the logged-in teacher
-                    if (auth()->user()->isTeacher()) {
-                        $query->where('teacher_id', auth()->user()->id);
-                    }
-                    return $query;
-                }),
+                //
+                Tables\Filters\Filter::make('Class Assigned')
+                    ->query(fn ($query) => $query->whereHas('teacher', fn ($q) => $q->where('id', auth()->id())))
+                    ->visible(fn () => auth()->user()->role === 'teacher'), 
             ])
             
             
             ->actions([
                 Tables\Actions\EditAction::make()->disabled($isStudent)->hidden($isStudent),
                 Tables\Actions\DeleteAction::make()->disabled($isStudent)->hidden($isStudent),
-
+                Tables\Actions\ViewAction::make('view_students')
+                    ->label('View Students'),
+                 
+                Tables\Actions\Action::make('join')
+                    ->label('Join')
+                    ->action(function (Schedule $schedule) {
+                        $schedule->students()->attach(auth()->user()->id); // Attaching the logged-in student to this schedule
+                    })
+                    ->visible(function (Schedule $schedule) {
+                        return auth()->user()->role === 'student' && !$schedule->students->contains(auth()->user()->id);
+                    }),   
+                Tables\Actions\Action::make('leave')
+                    ->label('leave')
+                    ->action(function (Schedule $schedule) {
+                        $schedule->students()->detach(auth()->user()->id); // Attaching the logged-in student to this schedule
+                    })
+                    ->visible(function (Schedule $schedule) {
+                        return auth()->user()->role === 'student' && $schedule->students->contains(auth()->user()->id);
+                    })                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -101,6 +113,7 @@ class ScheduleResource extends Resource
     {
         return [
             //
+            RelationManagers\StudentsRelationManager::class,
         ];
     }
 
@@ -111,6 +124,7 @@ class ScheduleResource extends Resource
             'index' => Pages\ListSchedules::route('/'),
             'create' => Pages\CreateSchedule::route('/create'),
             'edit' => Pages\EditSchedule::route('/{record}/edit'),
+            'view' => Pages\ViewSchedules::route('/{record}'),
         ];
     }
 }

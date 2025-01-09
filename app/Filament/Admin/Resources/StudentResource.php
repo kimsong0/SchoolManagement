@@ -39,6 +39,7 @@ class StudentResource extends Resource
                     ->email()
                     ->unique(ignoreRecord: true)
                     ->disabled($isStudent),
+
             ]);
     }
 
@@ -55,10 +56,13 @@ class StudentResource extends Resource
             ])
             ->filters([
                 //
+                Tables\Filters\Filter::make('Assigned to Me')
+                    ->query(fn ($query) => $query->whereHas('teachers', fn ($q) => $q->where('id', auth()->id())))
+                    ->visible(fn () => auth()->user()->role === 'teacher'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->disabled($isStudent)->hidden($isStudent),
-                Tables\Actions\DeleteAction::make()->disabled($isStudent)->hidden($isStudent),
+                Tables\Actions\DeleteAction::make()->disabled($isStudent)->hidden($isStudent), 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
