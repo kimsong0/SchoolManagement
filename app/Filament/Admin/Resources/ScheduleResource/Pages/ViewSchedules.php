@@ -19,20 +19,5 @@ class ViewSchedules extends ViewRecord
         return $schedule->students;
     }
 
-    // Display the table of students who joined the schedule
-    public function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('name')
-                    ->label('Student Name'),
-                TextColumn::make('age')
-                    ->label('Age'),
-                TextColumn::make('email')
-                    ->label('Email'),
-            ]) 
-            ->filters([
-                // 
-            ]);
-    }
+
 }

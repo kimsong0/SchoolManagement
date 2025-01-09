@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable implements FilamentUser
+
+class User extends Authenticatable implements FilamentUser 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -49,6 +50,14 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    public function getAvatarUrlAttribute()
+    {
+        // Get the initials of the user or use any other logic (like email or name)
+        $name = "{$this->first_name} {$this->last_name}";
+    
+        // Return the UI Avatar URL with a random background
+        return "https://ui-avatars.com/api/?name=" . urlencode($name) . "&background=random";
+    }
     
     public function isTeacher()
     {
@@ -68,6 +77,11 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
         return $this->isDirector() || $this->isTeacher() || $this->isStudent();
+    }
+
+    public function schedules()
+    {
+        return $this->belongsToMany(Schedule::class, 'schedule_student', 'student_id', 'schedule_id');
     }
    
 }
