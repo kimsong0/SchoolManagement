@@ -5,9 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('teacher')
-    ->middleware('teacher_access')
-    ->group(function(){
+Route::prefix('teacher')->middleware('teacher_access')->group(function(){
         Route::get('/', function(){
         return view('teacher');
             })->name('teacher');

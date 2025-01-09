@@ -12,7 +12,10 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::with('teacher')->get();
+        $schedules = Schedule::when(auth()->user()->isTeacher(), function ($query) {
+            return $query->where('teacher_id', auth()->user()->id);
+        })->get();
+    
         return view('schedules.index', compact('schedules'));
     }
 

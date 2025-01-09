@@ -3,9 +3,9 @@
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('director')->middleware('director_access')->group(function(){
+Route::middleware('director_access')->group(function(){
     Route::get('/', function(){
-        return view('director');
+        return redirect('/admin');
     })->name('director');
 
     Route::resource('schedules', ScheduleController::class)
