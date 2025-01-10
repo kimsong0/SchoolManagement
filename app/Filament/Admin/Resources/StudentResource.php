@@ -45,7 +45,7 @@ class StudentResource extends Resource
 
     public static function table(Table $table): Table
     {
-        $isStudent = auth()->user()->role === 'student';
+        $isDirector = auth()->user()->role === 'director';
 
         return $table
             ->columns([
@@ -56,13 +56,10 @@ class StudentResource extends Resource
             ])
             ->filters([
                 //
-                Tables\Filters\Filter::make('Assigned to Me')
-                    ->query(fn ($query) => $query->whereHas('teachers', fn ($q) => $q->where('id', auth()->id())))
-                    ->visible(fn () => auth()->user()->role === 'teacher'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->disabled($isStudent)->hidden($isStudent),
-                Tables\Actions\DeleteAction::make()->disabled($isStudent)->hidden($isStudent), 
+                Tables\Actions\EditAction::make()->visible($isDirector),
+                Tables\Actions\DeleteAction::make()->visible($isDirector), 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

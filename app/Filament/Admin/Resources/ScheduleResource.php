@@ -52,14 +52,13 @@ class ScheduleResource extends Resource
 
         return $table
             ->columns([
-                TextColumn::make('teacher.name')->label('Teacher'),
+                TextColumn::make('teacher.name')->label('Teacher')->searchable(),
                 TextColumn::make('schedule_date')->date()->sortable(),
                 TextColumn::make('start_time')->time(),
                 TextColumn::make('end_time')->time(),
                 TextColumn::make('classroom')->sortable(),
                 TextColumn::make('students_count')
                     ->label('Students Joined')
-                    ->sortable()
                     ->state(fn (Schedule $record) => $record->students()->count())            
                 ])
             ->filters([
@@ -73,14 +72,11 @@ class ScheduleResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->disabled($isStudent)->hidden($isStudent)
-                    ->visible(fn (Schedule $schedule) => auth()->user()->role === 'director' 
-                    || (auth()->user()->role === 'teacher' && auth()->user()->id === $schedule->teacher_id)
-                ),
+                    ->visible(fn ($record) => auth()->id() === $record->teacher_id ||auth()->user()->role === 'director'),
                 Tables\Actions\DeleteAction::make()
                     ->disabled($isStudent)->hidden($isStudent)
-                    ->visible(fn (Schedule $schedule) => auth()->user()->role === 'director' 
-                    || (auth()->user()->role === 'teacher' && auth()->user()->id === $schedule->teacher_id)
-                ),
+                    ->visible(fn ($record) => auth()->id() === $record->teacher_id ||auth()->user()->role === 'director'),
+
                 Tables\Actions\ViewAction::make('view_students')
                     ->label('View Students'),
                  

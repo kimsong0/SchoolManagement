@@ -78,10 +78,17 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->isDirector() || $this->isTeacher() || $this->isStudent();
     }
-
+    
+    public function taughtSchedules()
+    {
+        return $this->hasMany(Schedule::class, 'teacher_id');
+    }
     public function schedules()
     {
         return $this->belongsToMany(Schedule::class, 'schedule_student', 'student_id', 'schedule_id');
     }
+
+
+    
    
 }
