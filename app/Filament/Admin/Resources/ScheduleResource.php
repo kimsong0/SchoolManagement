@@ -71,15 +71,23 @@ class ScheduleResource extends Resource
             
             
             ->actions([
-                Tables\Actions\EditAction::make()->disabled($isStudent)->hidden($isStudent),
-                Tables\Actions\DeleteAction::make()->disabled($isStudent)->hidden($isStudent),
+                Tables\Actions\EditAction::make()
+                    ->disabled($isStudent)->hidden($isStudent)
+                    ->visible(fn (Schedule $schedule) => auth()->user()->role === 'director' 
+                    || (auth()->user()->role === 'teacher' && auth()->user()->id === $schedule->teacher_id)
+                ),
+                Tables\Actions\DeleteAction::make()
+                    ->disabled($isStudent)->hidden($isStudent)
+                    ->visible(fn (Schedule $schedule) => auth()->user()->role === 'director' 
+                    || (auth()->user()->role === 'teacher' && auth()->user()->id === $schedule->teacher_id)
+                ),
                 Tables\Actions\ViewAction::make('view_students')
                     ->label('View Students'),
                  
                 Tables\Actions\Action::make('join')
                     ->label('Join')
                     ->action(function (Schedule $schedule) {
-                        $schedule->students()->attach(auth()->user()->id); // Attaching the logged-in student to this schedule
+                        $schedule->students()->attach(auth()->user()->id); 
                     })
                     ->visible(function (Schedule $schedule) {
                         return auth()->user()->role === 'student' && !$schedule->students->contains(auth()->user()->id);
@@ -87,8 +95,8 @@ class ScheduleResource extends Resource
                 Tables\Actions\Action::make('leave')
                     ->label('leave')
                     ->action(function (Schedule $schedule) {
-                        $schedule->students()->detach(auth()->user()->id); // Attaching the logged-in student to this schedule
-                    })
+                        $schedule->students()->detach(auth()->user()->id);
+                    })  
                     ->visible(function (Schedule $schedule) {
                         return auth()->user()->role === 'student' && $schedule->students->contains(auth()->user()->id);
                     })                

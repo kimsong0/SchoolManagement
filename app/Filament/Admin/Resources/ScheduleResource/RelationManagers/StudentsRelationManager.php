@@ -45,10 +45,11 @@ class StudentsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                    ->action(function ($record) {
-                        // Remove the student from the schedule (pivot table)
-                        $record->schedules()->detach($this->ownerRecord->id); // `ownerRecord` is the current schedule
-                    }),
+
+                ->action(function ($record) {
+                    // Remove the student from the schedule (pivot table)
+                    $record->schedules()->detach($this->ownerRecord->id); // `ownerRecord` is the current schedule
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
